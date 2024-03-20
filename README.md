@@ -1,2 +1,2 @@
-# mern-full-stack-blog-app
+# mern-fullstack-blog-app
 MERN FullStack Blog App
