@@ -21,7 +21,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      console.log(formData);
       axios.defaults.withCredentials = true; // Pass the cookies with requests to the server
       await login(formData); // Call the login function from the context
       navigate('/');

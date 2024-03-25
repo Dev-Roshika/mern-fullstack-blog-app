@@ -6,8 +6,9 @@ import path from "path";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import UserModel from "./models/Users.js";
+import UserModel from "./models/User.js";
 import cookieParser from "cookie-parser";
+import postRoutes from "./routes/postsRoutes.js";
 
 dotenv.config();
 
@@ -34,6 +35,9 @@ app.use(
   })
 );
 
+app.use("/posts", postRoutes);
+
+
 //Multer storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -49,6 +53,9 @@ const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
   res.json("Hello from Express");
 });
+
+
+////////////////////////////////////////AUTH START////////////////////////////////////////
 
 // Route for user registration
 app.post("/auth/register", upload.single("img"), async (req, res) => {
@@ -99,45 +106,22 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
-// Route to get all users
-app.get("/getUsers", async (req, res) => {
-  try {
-    const users = await UserModel.find({});
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
+app.post("/auth/logout", (req, res) => {
+  res.clearCookie("access_token", 
+  {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
   }
+  ).json({ message: "user has been Logged out" });
 });
 
-app.post("/token", (req, res) => {
-  const refreshToken = req.body.token;
-  if (refreshToken == null) return res.sendStatus(401);
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({ name: user.name });
-    res.json({ accessToken: accessToken });
-  });
-});
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401).json({ error: "Unauthorized" });
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403).json({ error: "Forbidden" });
-    req.user = user;
-    next(); // pass the execution off to whatever request the client intended
-  });
-}
 
-function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1800s",
-  });
-}
+////////////////////////////////////////AUTH END////////////////////////////////////////
+
+
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
