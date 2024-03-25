@@ -22,7 +22,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('username', formData.username);
@@ -31,14 +30,16 @@ const Register = () => {
       formDataToSend.append('img', file); 
 
       // Send POST request to server to register user
-      await axios.post('http://localhost:8081/register', formDataToSend, {
+      axios.defaults.withCredentials = true;
+      
+      await axios.post('http://localhost:8081/auth/register', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data', 
         },
       });
 
       // Redirect to login page after successful registration
-      window.location.href = '/login';
+      window.location.href = '/auth/login';
     } catch (err) {
       setError(err.response.data.error);
     }
@@ -81,7 +82,7 @@ const Register = () => {
         <button type='submit'>Register</button>
         {error && <p>{error}</p>}
         <span>
-          Do you have an account? <Link to='/login'>Login</Link>
+          Do you have an account? <Link to='/auth/login'>Login</Link>
         </span>
       </form>
     </div>

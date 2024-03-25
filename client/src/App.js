@@ -6,8 +6,7 @@ import Single from "./pages/Single";
 import Write from "./pages/Write";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import "./style.scss"
-
+import "./style.css";
 
 const Layout = () => {
   return (
@@ -18,6 +17,11 @@ const Layout = () => {
     </>
   );
 };
+
+const authRoutes = [
+  { path: "register", element: <Register /> },
+  { path: "login", element: <Login /> },
+];
 
 const router = createBrowserRouter([
   {
@@ -39,12 +43,9 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
+    path: "auth",
+    element: <Outlet />,
+    children: authRoutes
   },
 ]);
 
