@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -19,7 +23,7 @@ const PostSchema = new mongoose.Schema({
   },
   uid: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     default: null,
   },
   cat: {

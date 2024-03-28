@@ -16,7 +16,10 @@ export const getPosts = async (req, res) => {
 // Get a single post by ID
 export const getPost = async (req, res) => {
   try {
-    const post = await PostModel.findById(req.params.id);
+    const post = await PostModel.findOne({
+      id: req.params.id,
+    }).populate("uid", "-password"); // Populate the 'uid' field to get user details
+
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
@@ -29,20 +32,18 @@ export const getPost = async (req, res) => {
 
 // Add a new post
 export const addPost = async (req, res) => {
-  try {
-    const newPost = new PostModel(req.body);
-    const savedPost = await newPost.save();
-    res.status(201).json(savedPost);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
+  res.json({ message: "Add a post" });
+
 };
 
-// Delete a post by ID
 export const deletePost = async (req, res) => {
   try {
-    const deletedPost = await PostModel.findByIdAndDelete(req.params.id);
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.status(401).json({ error: "Token is not Valid!" });
+    }
+    const postId = req.params.id;
+    const deletedPost = await PostModel.deleteOne({ id: postId });
     if (!deletedPost) {
       return res.status(404).json({ error: "Post not found" });
     }
@@ -55,18 +56,5 @@ export const deletePost = async (req, res) => {
 
 // Update a post by ID
 export const updatePost = async (req, res) => {
-  try {
-    const updatedPost = await PostModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedPost) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-    res.json(updatedPost);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
+  res.json({ message: "Update a post" });
 };

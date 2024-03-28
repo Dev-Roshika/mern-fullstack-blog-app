@@ -23,10 +23,6 @@ mongoose.connect(
 
 const app = express();
 
-// Middleware to parse JSON body
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -35,8 +31,19 @@ app.use(
   })
 );
 
-app.use("/posts", postRoutes);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => {
+  console.log("Connected to MongoDB");
+});
 
+// Middleware to parse JSON body
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/uploads/users", express.static("uploads/users"));
+
+app.use("/posts", postRoutes);
 
 //Multer storage configuration
 const storage = multer.diskStorage({
@@ -53,7 +60,6 @@ const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
   res.json("Hello from Express");
 });
-
 
 ////////////////////////////////////////AUTH START////////////////////////////////////////
 
@@ -94,8 +100,9 @@ app.post("/auth/login", async (req, res) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: true,
-          sameSite: "none",
+          //,
+          // secure: true,
+          // sameSite: "none",
         })
         .status(200)
         .json(userWithoutPassword);
@@ -107,21 +114,16 @@ app.post("/auth/login", async (req, res) => {
 });
 
 app.post("/auth/logout", (req, res) => {
-  res.clearCookie("access_token", 
-  {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  }
-  ).json({ message: "user has been Logged out" });
+  res
+    .clearCookie("access_token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    })
+    .json({ message: "user has been Logged out" });
 });
 
-
-
-
 ////////////////////////////////////////AUTH END////////////////////////////////////////
-
-
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);

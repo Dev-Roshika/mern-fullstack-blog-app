@@ -1,38 +1,71 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
+import axios from "axios";
+import moment from "moment";
+import { AuthContext } from "../context/authContext";
 
 const Single = () => {
+  const navigate = useNavigate();
+  const [post, setPost] = useState([]);
+
+  const { currentUser } = useContext(AuthContext);
+
+  const location = useLocation();
+  const postId = location.pathname.split("/")[2]; // localhost:3000/post/1 => ["", "post", "1"]
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        axios.defaults.withCredentials = true; // Pass the cookies with requests to the server
+        const res = await axios.get(`http://localhost:8081/posts/${postId}`); // Fetch a single post by ID
+        setPost(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPosts();
+  }, [postId]);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:8081/posts/${postId}`); // Delete a post by ID
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="single">
       <div className="content">
-        <img
-          src="https://img.freepik.com/free-photo/view-cooked-crawfish_23-2150426277.jpg?w=996&t=st=1710930710~exp=1710931310~hmac=dc90e57fef8eeba9d6b7e4016ce71abd4ee6d8165d3f9c8be1f4534653d3e1c2"
-          alt=""
-        />
+        <img src={post?.img} alt="" />
 
         <div className="user">
           <img
-            src="https://img.freepik.com/free-photo/close-up-young-successful-man-smiling-camera-standing-casual-outfit-against-blue-background_1258-66609.jpg?t=st=1710930926~exp=1710934526~hmac=1e95e4ab26ff26029536155c3ec31865cd1a0fe1fd16cad0c5eea3797feda8f6&w=996"
+            src={`http://localhost:8081/uploads/users/${post?.uid?.img}`}
             alt=""
           />
           <div className="info">
-            <span className="name">John Doe</span>
-            <p className="date">1 hour ago</p>
+            <span className="name">{post?.uid?.username}</span>
+            <p className="date">Posted {moment(post.date).fromNow()}</p>
           </div>
-          <div className="edit">
-            <Link to = "/write?edit=2">
-            <img src = {Edit} alt = "" />
-            </Link>
-            <img src = {Delete} alt = "" />
-          </div>
+          {currentUser?.username === post?.uid?.username && (
+            <div className="edit">
+              <Link to="/write?edit=2">
+                <img src={Edit} alt="" />
+              </Link>
+              <img src={Delete} onClick={handleDelete} alt="" />
+            </div>
+          )}
         </div>
-        <h1 className="title">Lorem ipsum dolor sit amet.</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eveniet dolores repellat qui voluptatibus nulla, voluptates modi, nihil eius velit porro, quae recusandae molestiae reprehenderit cumque provident doloremque sequi officiis quis iusto nostrum cum. Molestias voluptatibus nobis sequi voluptas doloribus praesentium eligendi, consequatur laudantium officia aut ipsum eius cum tempore dolor ullam corporis doloremque. Similique minima recusandae aperiam, corporis voluptatem sint aspernatur delectus placeat quasi voluptas expedita non doloribus labore, in ab corrupti quas voluptatum blanditiis necessitatibus nobis! Consequuntur, ab ut minus aspernatur maiores molestiae sit possimus amet maxime inventore cumque adipisci impedit earum repellat neque voluptate itaque eum nam a eius, aperiam sunt quis aut! Natus ducimus iure facilis libero id nesciunt harum necessitatibus officia minus culpa consequatur, nihil accusamus rerum cumque beatae repudiandae blanditiis sit eligendi repellat provident minima iusto vero dolore reiciendis. Veritatis quod, consectetur autem maxime accusamus necessitatibus dignissimos ducimus perspiciatis! Fugit vel ratione sit atque, neque facere earum ex itaque velit exercitationem modi inventore cumque dolorum! Laudantium facilis, illum quos tempore eum eius provident dolorum sed delectus voluptate. Qui animi quos consectetur nobis similique quis id rem placeat non atque? Voluptate sint sequi quidem? Quis, consequuntur libero. Incidunt pariatur, doloremque id fugiat quo rem vero!</p>
+        <h1 className="title">{post.title}</h1>
+
+        {post.description}
       </div>
-      <Menu />
+      <Menu cat={post.cat} />
     </div>
   );
 };
