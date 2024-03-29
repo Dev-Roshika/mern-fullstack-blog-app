@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
+import AutoIncrementFactory from "mongoose-sequence";
+
+const AutoIncrement = AutoIncrementFactory(mongoose);
 
 const PostSchema = new mongoose.Schema({
   id: {
     type: Number,
-    required: true,
+    unique: true,
   },
   title: {
     type: String,
@@ -31,6 +34,8 @@ const PostSchema = new mongoose.Schema({
     default: null,
   },
 });
+
+PostSchema.plugin(AutoIncrement, { inc_field: "id" }); // 'id' is the field to auto-increment
 
 const PostModel = mongoose.model("posts", PostSchema);
 

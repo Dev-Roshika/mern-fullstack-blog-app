@@ -21,6 +21,11 @@ const Home = () => {
     fetchPosts();
   }, [location.search]);
 
+  const getText = (text) => {
+    const doc = new DOMParser().parseFromString(text, "text/html");
+    return doc.body.textContent || "";
+  };
+
   return (
     <div className="home">
       <div className="posts">
@@ -28,14 +33,17 @@ const Home = () => {
           <div className="post" key={p.id}>
             <div className="img">
               <Link to={`/post/${p.id}`}>
-                <img src={p.img} alt="" />
+                <img
+                  src={`http://localhost:8081/uploads/users/${p?.img}`}
+                  alt=""
+                />
               </Link>
             </div>
             <div className="content">
               <Link className="link" to={`/post/${p.id}`}>
                 <h1>{p.title}</h1>
               </Link>
-              <p>{p.description}</p>
+              <p>{getText(p.description)}</p>
               <Link to={`/post/${p.id}`}>
                 <button>Read More</button>
               </Link>

@@ -42,6 +42,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/uploads/users", express.static("uploads/users"));
+app.use("/uploads/posts", express.static("uploads/posts"));
 
 app.use("/posts", postRoutes);
 
@@ -60,6 +61,27 @@ const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
   res.json("Hello from Express");
 });
+
+////////////////////////////////////////UPLOAD POST START////////////////////////////////////////
+
+// Multer storage configuration for posts
+const postStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/posts");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const postUpload = multer({ storage: postStorage });
+
+app.post("/upload", postUpload.single("file"), (req, res) => {
+  console.log(req.file);
+  res.status(200).json("Post uploaded successfully");
+});
+
+////////////////////////////////////////UPLOAD POST END////////////////////////////////////////
 
 ////////////////////////////////////////AUTH START////////////////////////////////////////
 

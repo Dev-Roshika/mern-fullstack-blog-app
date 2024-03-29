@@ -1,4 +1,5 @@
 import PostModel from "../models/Post.js";
+import jwt from "jsonwebtoken";
 
 // Get all posts or filter by category
 export const getPosts = async (req, res) => {
@@ -32,8 +33,28 @@ export const getPost = async (req, res) => {
 
 // Add a new post
 export const addPost = async (req, res) => {
-  res.json({ message: "Add a post" });
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.status(401).json({ error: "Token is not Valid!" });
+  }
 
+  jwt.verify(token, "jwtkey", async (err, userInfo) => {
+    if (err) {
+      return res.status(403).json({ error: "Invalid token" });
+    }
+
+    const { title, desc, img, cat, date } = req.body;
+    const newPost = new PostModel({
+      title,
+      description: desc,
+      img,
+      cat,
+      date,
+      uid: userInfo._id,
+    });
+    await newPost.save();
+    res.json(newPost).status(201);
+  });
 };
 
 export const deletePost = async (req, res) => {
@@ -56,5 +77,38 @@ export const deletePost = async (req, res) => {
 
 // Update a post by ID
 export const updatePost = async (req, res) => {
-  res.json({ message: "Update a post" });
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.status(401).json({ error: "Token is not Valid!" });
+    }
+
+    jwt.verify(token, "jwtkey", async (err, userInfo) => {
+      if (err) {
+        return res.status(403).json({ error: "Invalid token" });
+      }
+
+      const postId = req.params.id;
+      const { title, desc, img, cat, date } = req.body;
+      const updatedPost = await PostModel.findOneAndUpdate(
+        { id: postId },
+        {
+          title,
+          description: desc,
+          img,
+          cat,
+          date,
+          uid: userInfo._id,
+        },
+        { new: true }
+      );
+      if (!updatedPost) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      res.json(updatedPost);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
 };

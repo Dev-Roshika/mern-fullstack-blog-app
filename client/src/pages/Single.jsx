@@ -38,6 +38,11 @@ const Single = () => {
     }
   };
 
+  const getText = (text) => {
+    const doc = new DOMParser().parseFromString(text, "text/html");
+    return doc.body.textContent || "";
+  };
+
   return (
     <div className="single">
       <div className="content">
@@ -54,7 +59,7 @@ const Single = () => {
           </div>
           {currentUser?.username === post?.uid?.username && (
             <div className="edit">
-              <Link to="/write?edit=2">
+              <Link to={`/write?edit=${post.id}`} state={post}>
                 <img src={Edit} alt="" />
               </Link>
               <img src={Delete} onClick={handleDelete} alt="" />
@@ -63,7 +68,7 @@ const Single = () => {
         </div>
         <h1 className="title">{post.title}</h1>
 
-        {post.description}
+        {getText(post.description)}
       </div>
       <Menu cat={post.cat} />
     </div>
