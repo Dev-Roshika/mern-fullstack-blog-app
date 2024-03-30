@@ -21,6 +21,20 @@ const Home = () => {
     fetchPosts();
   }, [location.search]);
 
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    const truncated = description.substr(0, maxLength);
+    // Ensure we don't truncate in the middle of a word
+    return (
+      truncated.substr(
+        0,
+        Math.min(truncated.length, truncated.lastIndexOf(" "))
+      ) + " ..."
+    );
+  };
+
   return (
     <div className="home">
       <div className="posts">
@@ -29,7 +43,7 @@ const Home = () => {
             <div className="img">
               <Link to={`/post/${p.id}`}>
                 <img
-                  src={`http://localhost:8081/uploads/users/${p?.img}`}
+                  src={`http://localhost:8081/uploads/posts/${p?.img}`}
                   alt=""
                 />
               </Link>
@@ -38,8 +52,11 @@ const Home = () => {
               <Link className="link" to={`/post/${p.id}`}>
                 <h1>{p.title}</h1>
               </Link>
-              <div dangerouslySetInnerHTML={{ __html: p.description }} /> 
-              Render HTML content
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: truncateDescription(p.description, 150),
+                }}
+              />
               <Link to={`/post/${p.id}`}>
                 <button>Read More</button>
               </Link>

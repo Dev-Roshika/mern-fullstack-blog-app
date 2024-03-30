@@ -8,6 +8,15 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  const handleWriteClick = () => {
+    if (!currentUser) {
+      alert("Please log in to write a post.");
+      navigate("/auth/login");
+    } else {
+      navigate("/write");
+    }
+  };
+
   const handleLogout = async () => {
     try {
       logout(); // Clear user context
@@ -21,9 +30,12 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="logo">
-          <Link to="/">
-            <img src={Logo} alt="" />
-          </Link>
+          <img
+            style={{ cursor: "pointer" }}
+            src={Logo}
+            alt=""
+            onClick={() => (window.location.href = "/")}
+          />
         </div>
         <div className="links">
           <Link className="link" to="/?cat=art">
@@ -57,9 +69,9 @@ const Navbar = () => {
             )}
           </span>
           <span className="write">
-            <Link className="link" to="/write">
+            <span className="link" onClick={handleWriteClick}>
               Write
-            </Link>
+            </span>
           </span>
         </div>
       </div>

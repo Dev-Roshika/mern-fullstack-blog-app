@@ -78,7 +78,9 @@ const postUpload = multer({ storage: postStorage });
 
 app.post("/upload", postUpload.single("file"), (req, res) => {
   console.log(req.file);
-  res.status(200).json("Post uploaded successfully");
+  const filename = req.file.filename;
+  console.log("filename : ", filename);
+  res.json(filename);
 });
 
 ////////////////////////////////////////UPLOAD POST END////////////////////////////////////////

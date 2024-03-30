@@ -384,3 +384,9 @@ footer {
 footer img {
   height: 50px;
 }
+
+footer span {
+  display: block; 
+  text-align: center;
+  margin-top: 10px; 
+}
