@@ -38,16 +38,10 @@ const Single = () => {
     }
   };
 
-  const getText = (text) => {
-    const doc = new DOMParser().parseFromString(text, "text/html");
-    return doc.body.textContent || "";
-  };
-
   return (
     <div className="single">
       <div className="content">
         <img src={post?.img} alt="" />
-
         <div className="user">
           <img
             src={`http://localhost:8081/uploads/users/${post?.uid?.img}`}
@@ -67,8 +61,8 @@ const Single = () => {
           )}
         </div>
         <h1 className="title">{post.title}</h1>
-
-        {getText(post.description)}
+        <div dangerouslySetInnerHTML={{ __html: post.description }} /> 
+        HTML content
       </div>
       <Menu cat={post.cat} />
     </div>

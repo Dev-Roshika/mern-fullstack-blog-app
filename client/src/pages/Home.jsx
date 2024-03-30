@@ -21,11 +21,6 @@ const Home = () => {
     fetchPosts();
   }, [location.search]);
 
-  const getText = (text) => {
-    const doc = new DOMParser().parseFromString(text, "text/html");
-    return doc.body.textContent || "";
-  };
-
   return (
     <div className="home">
       <div className="posts">
@@ -43,7 +38,8 @@ const Home = () => {
               <Link className="link" to={`/post/${p.id}`}>
                 <h1>{p.title}</h1>
               </Link>
-              <p>{getText(p.description)}</p>
+              <div dangerouslySetInnerHTML={{ __html: p.description }} /> 
+              Render HTML content
               <Link to={`/post/${p.id}`}>
                 <button>Read More</button>
               </Link>
