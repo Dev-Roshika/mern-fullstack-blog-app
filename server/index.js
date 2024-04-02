@@ -149,6 +149,18 @@ app.post("/auth/logout", (req, res) => {
 
 ////////////////////////////////////////AUTH END////////////////////////////////////////
 
+// Route to get all users
+app.get("/user/:userId", async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.userId);
+    console.log("user : ", user);
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
 });

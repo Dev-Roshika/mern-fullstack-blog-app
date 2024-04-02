@@ -17,14 +17,24 @@ const Menu = ({ cat }) => {
     fetchPosts();
   }, [cat]);
 
+  const handleClick = (id) => {
+    navigate(`/post/${id}`);
+  };
+
   return (
     <div className="menu">
       <h1>Other posts you may like</h1>
       {posts.map((p) => (
         <div className="post" key={p.id}>
-          <img src={`http://localhost:8081/uploads/posts/${p?.img}`} alt="" />
-          <h2>{p.title}</h2>
-          <button onClick={() => navigate(`/post/${p?.id}`)}>Read More </button>
+          <img
+            src={`http://localhost:8081/uploads/posts/${p?.img}`}
+            alt=""
+            onClick={() => handleClick(p?.id)}
+          />
+          <h2 style={{ cursor: "pointer" }} onClick={() => handleClick(p?.id)}>
+            {p.title}
+          </h2>
+          <button onClick={() => handleClick(p?.id)}>Read More </button>
         </div>
       ))}
     </div>
