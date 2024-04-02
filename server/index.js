@@ -16,11 +16,6 @@ const PORT = process.env.PORT || 8081;
 
 let refreshTokens = [];
 
-// XsdsmXqL36QtSs4G
-mongoose.connect(
-  "mongodb+srv://roshikanayanadhara:XsdsmXqL36QtSs4G@cluster0.y6eekh5.mongodb.net/MERN-FullStack-Blog"
-);
-
 const app = express();
 
 app.use(
@@ -29,6 +24,11 @@ app.use(
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
+);
+
+// XsdsmXqL36QtSs4G
+mongoose.connect(
+  "mongodb+srv://roshikanayanadhara:XsdsmXqL36QtSs4G@cluster0.y6eekh5.mongodb.net/MERN-FullStack-Blog"
 );
 
 const db = mongoose.connection;
