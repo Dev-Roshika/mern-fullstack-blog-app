@@ -126,7 +126,7 @@ app.post("/auth/login", async (req, res) => {
           httpOnly: true,
           //,
           // secure: true,
-          // sameSite: "none",
+          sameSite: "none",
         })
         .status(200)
         .json(userWithoutPassword);
