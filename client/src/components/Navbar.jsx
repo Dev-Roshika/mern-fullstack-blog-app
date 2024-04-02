@@ -1,12 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "../img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import axios from "axios";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
+
+  useEffect(() => {
+    // Get user ID from local storage
+
+    const userDetails = JSON.parse(localStorage.getItem("user"));
+
+    // console.log("userDetails._id : ", userDetails._id);
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/user/${userDetails._id}`
+        );
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    if (userDetails) {
+      fetchUser();
+    }
+  }, []);
 
   const handleWriteClick = () => {
     if (!currentUser) {
@@ -26,6 +52,10 @@ const Navbar = () => {
     }
   };
 
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+  };
+
   return (
     <div className="navbar">
       <div className="container">
@@ -38,26 +68,57 @@ const Navbar = () => {
           />
         </div>
         <div className="links">
-          <Link className="link" to="/?cat=art">
+          <Link
+            className={`linkCat ${activeCategory === "art" ? "active" : ""}`}
+            to="/?cat=art"
+            onClick={() => handleCategoryClick("art")}
+          >
             <h6>ART</h6>
           </Link>
-          <Link className="link" to="/?cat=science">
+          <Link
+            className={`linkCat ${
+              activeCategory === "science" ? "active" : ""
+            }`}
+            to="/?cat=science"
+            onClick={() => handleCategoryClick("science")}
+          >
             <h6>SCIENCE</h6>
           </Link>
-          <Link className="link" to="/?cat=technology">
+          <Link
+            className={`linkCat ${
+              activeCategory === "technology" ? "active" : ""
+            }`}
+            to="/?cat=technology"
+            onClick={() => handleCategoryClick("technology")}
+          >
             <h6>TECHNOLOGY</h6>
           </Link>
-          <Link className="link" to="/?cat=cinema">
+          <Link
+            className={`linkCat ${activeCategory === "cinema" ? "active" : ""}`}
+            to="/?cat=cinema"
+            onClick={() => handleCategoryClick("cinema")}
+          >
             <h6>CINEMA</h6>
           </Link>
-          <Link className="link" to="/?cat=design">
+          <Link
+            className={`linkCat ${activeCategory === "design" ? "active" : ""}`}
+            to="/?cat=design"
+            onClick={() => handleCategoryClick("design")}
+          >
             <h6>DESIGN</h6>
           </Link>
-          <Link className="link" to="/?cat=food">
-            <h6>FOOD</h6>
-          </Link>
-          <span>{currentUser?.username}</span>
-          <span>
+          {currentUser ? (
+            <div>
+              <img
+                src={`http://localhost:8081/uploads/users/${user?.img}`}
+                alt=""
+              />
+            </div>
+          ) : null}
+          <span style={{ fontWeight: 600, color: "#14b8a6" }}>
+            {currentUser?.username}
+          </span>
+          <span className="logoutSpan">
             {currentUser ? (
               <span className="logout" onClick={handleLogout}>
                 Logout
@@ -75,6 +136,7 @@ const Navbar = () => {
           </span>
         </div>
       </div>
+      <hr></hr>
     </div>
   );
 };

@@ -41,7 +41,7 @@ const Single = () => {
   return (
     <div className="single">
       <div className="content">
-        <img src={post?.img} alt="" />
+        <img src={`http://localhost:8081/uploads/posts/${post?.img}`} alt="" />
         <div className="user">
           <img
             src={`http://localhost:8081/uploads/users/${post?.uid?.img}`}
