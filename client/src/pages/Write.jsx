@@ -13,6 +13,8 @@ const Write = () => {
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || "");
 
+  axios.defaults.withCredentials = true;
+
   const uploadFile = async () => {
     try {
       const formData = new FormData();
