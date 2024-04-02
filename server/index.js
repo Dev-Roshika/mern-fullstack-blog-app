@@ -25,7 +25,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://mern-fullstack-blog-app-frontend.vercel.app/"],
+    origin: ["https://mern-fullstack-blog-app-frontend.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
