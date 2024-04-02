@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 const Menu = ({ cat }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
+  
+  axios.defaults.withCredentials = true;
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
