@@ -7,6 +7,8 @@ const Home = () => {
 
   const location = useLocation();
 
+  axios.defaults.withCredentials = true;
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
