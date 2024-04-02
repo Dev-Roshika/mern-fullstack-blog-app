@@ -20,7 +20,7 @@ const Single = () => {
     const fetchPosts = async () => {
       try {
         axios.defaults.withCredentials = true; // Pass the cookies with requests to the server
-        const res = await axios.get(`http://localhost:8081/posts/${postId}`); // Fetch a single post by ID
+        const res = await axios.get(`https://mern-fullstack-blog-app-api.vercel.app/posts/${postId}`); // Fetch a single post by ID
         setPost(res.data);
       } catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ const Single = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8081/posts/${postId}`); // Delete a post by ID
+      await axios.delete(`https://mern-fullstack-blog-app-api.vercel.app/posts/${postId}`); // Delete a post by ID
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -41,10 +41,10 @@ const Single = () => {
   return (
     <div className="single">
       <div className="content">
-        <img src={`http://localhost:8081/uploads/posts/${post?.img}`} alt="" />
+        <img src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/posts/${post?.img}`} alt="" />
         <div className="user">
           <img
-            src={`http://localhost:8081/uploads/users/${post?.uid?.img}`}
+            src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/users/${post?.uid?.img}`}
             alt=""
           />
           <div className="info">

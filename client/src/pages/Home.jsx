@@ -11,7 +11,7 @@ const Home = () => {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8081/posts/${location.search}`
+          `https://mern-fullstack-blog-app-api.vercel.app/posts/${location.search}`
         ); // Fetch posts based on the query string
         setPosts(res.data);
       } catch (error) {

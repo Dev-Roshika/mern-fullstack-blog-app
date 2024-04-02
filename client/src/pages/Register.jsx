@@ -32,7 +32,7 @@ const Register = () => {
       // Send POST request to server to register user
       axios.defaults.withCredentials = true;
       
-      await axios.post('http://localhost:8081/auth/register', formDataToSend, {
+      await axios.post('https://mern-fullstack-blog-app-api.vercel.app/auth/register', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data', 
         },

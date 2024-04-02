@@ -17,7 +17,7 @@ const Write = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await axios.post("http://localhost:8081/upload/", formData);
+      const res = await axios.post("https://mern-fullstack-blog-app-api.vercel.app/upload/", formData);
       return res.data;
     } catch (err) {
       console.log(err);
@@ -29,13 +29,13 @@ const Write = () => {
     const imgUrl = await uploadFile();
     try {
       state
-        ? await axios.put(`http://localhost:8081/posts/${state.id}`, {
+        ? await axios.put(`https://mern-fullstack-blog-app-api.vercel.app/posts/${state.id}`, {
             title,
             desc: value,
             cat,
             img: file ? imgUrl : "",
           })
-        : await axios.post("http://localhost:8081/posts/", {
+        : await axios.post("https://mern-fullstack-blog-app-api.vercel.app/posts/", {
             title,
             desc: value,
             cat,
