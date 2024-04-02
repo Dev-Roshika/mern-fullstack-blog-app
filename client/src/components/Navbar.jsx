@@ -20,6 +20,7 @@ const Navbar = () => {
     // console.log("userDetails._id : ", userDetails._id);
     const fetchUser = async () => {
       try {
+        axios.defaults.withCredentials = true;
         const response = await axios.get(
           `https://mern-fullstack-blog-app-api.vercel.app/user/${userDetails._id}`
         );
