@@ -43,7 +43,7 @@ const Home = () => {
             <div className="img">
               <Link to={`/post/${p.id}`}>
                 <img
-                  src={`http://localhost:8081/uploads/posts/${p?.img}`}
+                  src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/posts/${p?.img}`}
                   alt=""
                 />
               </Link>
