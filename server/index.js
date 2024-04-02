@@ -126,7 +126,7 @@ app.post("/auth/login", async (req, res) => {
           httpOnly: true,
           //,
           // secure: true,
-          sameSite: "none",
+          SameSite=None
         })
         .status(200)
         .json(userWithoutPassword);
@@ -142,7 +142,7 @@ app.post("/auth/logout", (req, res) => {
     .clearCookie("access_token", {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      SameSite=None
     })
     .json({ message: "user has been Logged out" });
 });
