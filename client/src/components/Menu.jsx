@@ -8,7 +8,7 @@ const Menu = ({ cat }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`http://localhost:8081/posts/?cat=${cat}`); // Fetch posts based on the query string
+        const res = await axios.get(`https://mern-fullstack-blog-app-api.vercel.app/posts/?cat=${cat}`); // Fetch posts based on the query string
         setPosts(res.data);
       } catch (error) {
         console.error(error);
@@ -27,7 +27,7 @@ const Menu = ({ cat }) => {
       {posts.map((p) => (
         <div className="post" key={p.id}>
           <img
-            src={`http://localhost:8081/uploads/posts/${p?.img}`}
+            src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/posts/${p?.img}`}
             alt=""
             onClick={() => handleClick(p?.id)}
           />

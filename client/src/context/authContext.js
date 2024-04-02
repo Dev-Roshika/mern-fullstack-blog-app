@@ -9,11 +9,11 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.post("http://localhost:8081/auth/login", inputs);
+    const res = await axios.post("https://mern-fullstack-blog-app-api.vercel.app/auth/login", inputs);
     setCurrentUser(res.data);
   };
   const logout = async () => {
-    await axios.post("http://localhost:8081/auth/logout");
+    await axios.post("https://mern-fullstack-blog-app-api.vercel.app/auth/logout");
     setCurrentUser(null);
   };
 

@@ -21,7 +21,7 @@ const Navbar = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/user/${userDetails._id}`
+          `https://mern-fullstack-blog-app-api.vercel.app/user/${userDetails._id}`
         );
         setUser(response.data);
       } catch (error) {
@@ -110,7 +110,7 @@ const Navbar = () => {
           {currentUser ? (
             <div>
               <img
-                src={`http://localhost:8081/uploads/users/${user?.img}`}
+                src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/users/${user?.img}`}
                 alt=""
               />
             </div>
