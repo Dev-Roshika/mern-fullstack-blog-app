@@ -20,6 +20,7 @@ const Navbar = () => {
     // console.log("userDetails._id : ", userDetails._id);
     const fetchUser = async () => {
       try {
+        axios.defaults.withCredentials = true;
         const response = await axios.get(
           `http://localhost:8081/user/${userDetails._id}`
         );
