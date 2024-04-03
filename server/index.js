@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import UserModel from "./models/User.js";
 import cookieParser from "cookie-parser";
 import postRoutes from "./routes/postsRoutes.js";
+import helmet from "helmet";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(helmet())
 
 // XsdsmXqL36QtSs4G
 mongoose.connect(
