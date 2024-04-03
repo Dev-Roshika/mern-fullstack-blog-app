@@ -13,7 +13,7 @@ const Footer = () => {
         />
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <span>© 2021 Roshika</span>
+        <span>© 2024 Roshika</span>
       </div>
     </footer>
   );
