@@ -16,7 +16,7 @@ const Navbar = () => {
     // Get user ID from local storage
 
     const userDetails = JSON.parse(localStorage.getItem("user"));
-
+    console.log("userDetails : ", userDetails);
     axios.defaults.withCredentials = true;
     const fetchUser = async () => {
       try {
