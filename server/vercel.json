@@ -4,14 +4,6 @@
     {
       "src": "./index.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "./uploads/posts/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "./uploads/users/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -21,3 +13,4 @@
     }
   ]
 }
+
