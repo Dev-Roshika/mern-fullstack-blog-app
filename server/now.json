@@ -4,5 +4,10 @@
     { "src": "**/*.js", "use": "@now/node" },
     { "src": "uploads/users/**/*", "use": "@now/static" },
     { "src": "uploads/posts/**/*", "use": "@now/static" }
+  ],
+  "routes": [
+    { "src": "/uploads/users/(.*)", "dest": "/uploads/users/$1" },
+    { "src": "/uploads/posts/(.*)", "dest": "/uploads/posts/$1" },
+    { "src": "/(.*)", "dest": "/index.js" }
   ]
 }
