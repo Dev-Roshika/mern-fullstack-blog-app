@@ -11,17 +11,14 @@ const Navbar = () => {
 
   const [user, setUser] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
+  const userDetails = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // Get user ID from local storage
-
-    const userDetails = JSON.parse(localStorage.getItem("user"));
-    console.log("userDetails : ", userDetails);
-    axios.defaults.withCredentials = true;
     const fetchUser = async () => {
       try {
+        axios.defaults.withCredentials = true;
         const response = await axios.get(
-          `https://mern-fullstack-blog-app-api.vercel.app/user/${userDetails._id}`
+          `http://localhost:8081/user/${userDetails._id}`
         );
         setUser(response.data);
       } catch (error) {
@@ -32,7 +29,7 @@ const Navbar = () => {
     if (userDetails) {
       fetchUser();
     }
-  }, []);
+  }, [userDetails]);
 
   const handleWriteClick = () => {
     if (!currentUser) {
@@ -57,7 +54,6 @@ const Navbar = () => {
   };
 
   return (
-    console.log("user : ", user),
     <div className="navbar">
       <div className="container">
         <div className="logo">
@@ -111,7 +107,7 @@ const Navbar = () => {
           {currentUser ? (
             <div>
               <img
-                src={`https://mern-fullstack-blog-app-api.vercel.app/uploads/users/${user?.img}`}
+                src={`http://localhost:8081/uploads/users/${user?.img}`}
                 alt=""
               />
             </div>
