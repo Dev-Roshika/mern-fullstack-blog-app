@@ -1,9 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "**/*.js", "use": "@now/node" },
-    { "src": "uploads/users/**/*", "use": "@now/static" },
-    { "src": "uploads/posts/**/*", "use": "@now/static" }
+    { "src": "**/*.js", "use": "@vercel/node" },
+    { "src": "uploads/users/**/*", "use": "@vercel/static" },
+    { "src": "uploads/posts/**/*", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/uploads/users/(.*)", "dest": "/uploads/users/$1" },
