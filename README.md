@@ -1,6 +1,8 @@
 # MERN Full-Stack Blog App Documentation
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
+[screen-capture (5).webm](https://github.com/Dev-Roshika/mern-fullstack-blog-app/assets/81811433/9abbae87-fb1f-440d-bda8-43e21cf28898)
+
 
 **Table of Contents**
 
