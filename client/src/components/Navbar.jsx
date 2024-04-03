@@ -11,13 +11,9 @@ const Navbar = () => {
 
   const [user, setUser] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
+  const userDetails = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // Get user ID from local storage
-
-    const userDetails = JSON.parse(localStorage.getItem("user"));
-
-    // console.log("userDetails._id : ", userDetails._id);
     const fetchUser = async () => {
       try {
         axios.defaults.withCredentials = true;
@@ -33,7 +29,7 @@ const Navbar = () => {
     if (userDetails) {
       fetchUser();
     }
-  }, []);
+  }, [userDetails]);
 
   const handleWriteClick = () => {
     if (!currentUser) {
