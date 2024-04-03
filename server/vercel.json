@@ -1,17 +1,17 @@
 {
   "version": 2,
   "builds": [
-    { "src": "/server/uploads/posts/**", "use": "@vercel/node" },
-    { "src": "/server/uploads/users/**", "use": "@vercel/node" }
+    { "src": "/uploads/posts/**", "use": "@vercel/node" },
+    { "src": "/uploads/users/**", "use": "@vercel/node" }
   ],
   "routes": [
     {
       "src": "/uploads/posts/(.*)",
-      "dest": "/server/uploads/posts/$1"
+      "dest": "/uploads/posts/$1"
     },
     {
       "src": "/uploads/users/(.*)",
-      "dest": "/server/uploads/users/$1"
+      "dest": "/uploads/users/$1"
     },
     {
       "src": "/(.*)",
