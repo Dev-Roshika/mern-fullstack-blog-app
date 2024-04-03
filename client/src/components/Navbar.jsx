@@ -23,6 +23,7 @@ const Navbar = () => {
         const response = await axios.get(
           `https://mern-fullstack-blog-app-api.vercel.app/user/${userDetails._id}`
         );
+        console.log("response.data: "+response.data);
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user details:", error);
