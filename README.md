@@ -22,7 +22,6 @@ This project is a full-stack blog application built using the MERN stack (MongoD
 ## Hosted Link
 <a href="https://mern-fullstack-blog-app-frontend.vercel.app/" target="_blank">https://mern-fullstack-blog-app-frontend.vercel.app/</a>
 
-<br />
 <!-- TOC --><a name="features"></a>
 ## Features
 
