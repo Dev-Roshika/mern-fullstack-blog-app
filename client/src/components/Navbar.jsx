@@ -13,9 +13,9 @@ const Navbar = () => {
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("user"));
     const fetchUser = async () => {
       try {
-        const userDetails = JSON.parse(localStorage.getItem("user"));
         axios.defaults.withCredentials = true;
         const response = await axios.get(
           `http://localhost:8081/user/${userDetails._id}`
