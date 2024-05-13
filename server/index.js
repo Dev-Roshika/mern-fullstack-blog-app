@@ -28,9 +28,9 @@ app.use(
 );
 app.use(helmet())
 
-// XsdsmXqL36QtSs4G
+// XsdsmXqL36QtSs4G NLh5XzBqeqSpadtU
 mongoose.connect(
-  "mongodb+srv://roshikanayanadhara:XsdsmXqL36QtSs4G@cluster0.y6eekh5.mongodb.net/MERN-FullStack-Blog"
+  "mongodb+srv://roshikanayanadhara:NLh5XzBqeqSpadtU@cluster0.y6eekh5.mongodb.net/MERN-FullStack-Blog"
 );
 
 const db = mongoose.connection;
